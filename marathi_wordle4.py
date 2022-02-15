@@ -598,6 +598,8 @@ def mainfunc(n):
     st.session_state['usedc'] = ['X'] # we ignore the zeroth later
     st.session_state['usedv'] = ['X'] # we ignore the zeroth later
 
+#   sort --random-sort subwordslen4.dat  > jod4.txt
+#   mv jod4.txt subwordslen4.dat
     if 'secret' not in st.session_state:
         st.session_state['balloons'] = 1
         st.session_state['sessionid'] = uuid.uuid4().hex
@@ -605,6 +607,7 @@ def mainfunc(n):
         #nthword = random.randrange(len(words))
         nthword = datetime.now().timetuple().tm_yday  # returns 1 for January 1st
         secret = words[nthword]
+        st.write(nthword,secret)
         st.session_state['nthword'] = nthword
         st.session_state['secret'] = secret
         st.session_state['rsshape'] = [vowel_revsub[int(i)] for i in vowel_structure(secret)]
