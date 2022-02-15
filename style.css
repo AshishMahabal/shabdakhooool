@@ -1,0 +1,12 @@
+body {
+    color: #fff;
+    background-color: #4488FF;
+}
+
+.stTextInput>div>div>input {
+    color: #4488FF;
+}
+
+p,.stTextInput input {
+    font-size:20px;
+}
