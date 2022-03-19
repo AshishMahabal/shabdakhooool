@@ -420,7 +420,10 @@ def getinput(secret,imunicode,onemore,depth):
                 myc2 = st.text_input('','',key=st.session_state['gcount'],placeholder=prompt)
         else:
             if st.session_state['balloons'] == 1: # This still causes some issues
-                st.balloons()
+                if len(st.session_state['mylist'])==2:
+                    st.snow()
+                else:
+                    st.balloons()
                 st.session_state['balloons'] = 0
             col1, col2 = st.columns([12, 16])
             modalstr = ''
