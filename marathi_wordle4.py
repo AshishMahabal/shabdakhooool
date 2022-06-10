@@ -445,7 +445,7 @@ def getinput(secret,imunicode,onemore,depth):
 
         ### Record all words for the winners
         if goodstr !=0 and myc2score == 'G' * len(split_clusters(secret)):
-                write2firebase(st.session_state['sessionid'],st.session_state['mylist'])
+                #write2firebase(st.session_state['sessionid'],st.session_state['mylist'])
                 getinput(secret,imunicode,0,depth)
         else:
             getinput(secret,imunicode,1,depth)
