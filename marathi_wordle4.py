@@ -65,10 +65,11 @@ hide_menu_style = """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 # A few Globals
+answer_threshold = 6
+n = 4
+pmode = 'd4y1'
 wlen = 4 # That is the length we currently use
-
-# Used for quick tests
-wordlist = ['मयत','मकडी','माकड','मगर','मंकड','कमळ','करीम','किस्त्रीम','मंगळ','मालती']
+purl = 'https://www.shabdakhoool.games/'
 
 # 'ऱ' (r in तऱ्हा) is mapped to 'र' in blues2
 consonants = ['क', 'ख', 'ग', 'घ', 'ङ', 'च', 'छ', 'ज', 'झ', 'ञ', 'ट', 'ठ', 'ड', 'ढ', 'ण', 
@@ -322,14 +323,6 @@ def tldr():
     blacktext("%s चूक*" % imunicode['R'])
     blacktext("* तपशील पहा")
 
-#### todos() not displayed currently
-def todos():
-    st.subheader("ToDos:")
-    st.markdown("- Add items to this list")
-    st.markdown("- Lots of features.")
-    st.markdown("- Trim word list")
-    st.markdown("- Provide examples with markings")
-
 ## What?
 def blacktext(text):
     mtext = "<font color='black'>%s</font>" % text
@@ -429,10 +422,10 @@ def getinput(secret,imunicode,onemore,depth):
             modalstr = ''
             for i in range(1,len(st.session_state['mylist'])):
                 modalstr = modalstr + ''.join([imunicode[k] for k in st.session_state['mylist'][i][1]]) + '\n'
-            with col1: # शब्दखूुळ doesn't show properly everywhere
-                st.write("दवंडी पिटा")
-                st.code("शब्दखूुळ\n#%d %s/∞\n\n%s" % (st.session_state['nthword'],get_mdigits(len(st.session_state['mylist'])-1),modalstr))
-
+            #with col1: # शब्दखूुळ doesn't show properly everywhere
+            st.write("दवंडी पिटा")
+            toShare = "दैनिक शब्दखूुळ चाराक्षरी\n#%d %s/∞\n\n%s\n%s" % (st.session_state['nthword'],get_mdigits(len(st.session_state['mylist'])-1),modalstr,purl)
+            st.code(toShare)
             myc2 = ''
 
     if myc2.strip():
@@ -473,6 +466,8 @@ def write2firebase(sid,inlist):
         setstr['attempts'].append(attemptdict)
     timenow = datetime.datetime.now(datetime.timezone.utc)
     setstr[u'wintime'] = timenow
+    setstr[u'pmode'] = pmode    # daily_len3_year1
+    setstr[u'nthday'] = st.session_state['nthword'] 
     doc_ref.set(setstr)
 
 def get_mdigits(n):
