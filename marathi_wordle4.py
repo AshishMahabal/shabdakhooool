@@ -30,8 +30,6 @@ import uuid
 from collections import Counter
 from collections import defaultdict
 
-from datetime import datetime
-
 ### Pinch of CSS
 def local_css(file_name):
     with open(file_name) as f:
@@ -43,14 +41,6 @@ local_css("style.css")
 ### Image instead of unicode that breaks on iphones
 #st.title('शब्दखुूळ (तिनाक्षरी)')
 st.image('shabdakhoool.png')
-
-### Future extension to allow words of other lengths
-#st.sidebar.title("Word Length")
-# toDisplay = st.sidebar.radio(
-# 	"Options",
-# 	["2", "3", "4","5"],
-# 	index=1
-# )
 
 ### We use this for firebase ids. No locations involved
 def def_value():
@@ -407,6 +397,10 @@ def getinput(secret,imunicode,onemore,depth):
                             st.text('तुम्ही जिंकलात')
             
         if onemore: # If victory has not been achieved
+            if len(st.session_state['mylist'])> answer_threshold:
+                if st.button('उत्तर',key=st.session_state['gcount']):
+                    reveal()
+            col1, col2 = st.columns([20,10])
             col1, col2 = st.columns([20,10])
             with col1:
                 prompt = "स्वरक्रम `%s` व्यंजने `%s`" % (''.join(st.session_state['rsshape']),''.join(st.session_state['cshape']))
@@ -603,7 +597,7 @@ def mainfunc(n):
         st.session_state['sessionid'] = uuid.uuid4().hex
         words = open(secret_wordfile,'r').read().split('\n')
         #nthword = random.randrange(len(words))
-        nthword = datetime.now().timetuple().tm_yday  # returns 1 for January 1st
+        nthword = datetime.datetime.now().timetuple().tm_yday  # returns 1 for January 1st
         secret = words[nthword]
         st.session_state['nthword'] = nthword
         st.session_state['secret'] = secret
